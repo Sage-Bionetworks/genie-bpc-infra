@@ -36,10 +36,6 @@ def get_required_env(name: str) -> str:
 def create_id() -> str:
     return get_required_env(STACK_NAME_PREFIX)+ID_SUFFIX
 
-
-CONTAINER_ENV = "CONTAINER_ENV" # name of env passed from GitHub action
-ENV_NAME = "ENV"
-
 def get_vpc_name() -> str:
     return get_required_env(STACK_NAME_PREFIX)+VPC_SUFFIX
 
@@ -60,9 +56,6 @@ def get_cost_center() -> str:
 
 def get_port() -> int:
     return int(get_required_env(PORT_NUMBER))
-
-def get_container_env() -> str:
-    return os.getenv(CONTAINER_ENV)
 
 def create_secret(scope: Construct, name: str) -> str:
     isecret = sm.Secret.from_secret_name_v2(scope, name, name)
@@ -95,9 +88,6 @@ class DockerFargateStack(Stack):
         }
 
         env_vars = {}
-        container_env = get_container_env()
-        if container_env is not None:
-            env_vars[ENV_NAME]=container_env
 
         task_image_options = ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
     	    	   image=ecs.ContainerImage.from_registry(get_docker_image_name()),
