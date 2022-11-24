@@ -25,6 +25,7 @@ PORT_NUMBER = "PORT"
 HOST_NAME = "HOST_NAME"
 HOSTED_ZONE_NAME = "HOSTED_ZONE_NAME"
 HOSTED_ZONE_ID = "HOSTED_ZONE_ID"
+APP_REDIRECT_URL = "APP_REDIRECT_URL"
 
 # The name of the environment variable that will hold the secrets
 SECRETS_MANAGER_ENV_NAME = "SECRETS_MANAGER_SECRETS"
@@ -74,6 +75,9 @@ def get_hosted_zone_id() -> str:
 def get_host_name() -> str:
 	return os.getenv(HOST_NAME)
 
+def get_redirect_url() -> str:
+	return "https://"+get_host_name()
+
 class DockerFargateStack(Stack):
 
     def __init__(self, scope: Construct, **kwargs) -> None:
@@ -85,11 +89,12 @@ class DockerFargateStack(Stack):
         cluster = ecs.Cluster(self, get_cluster_name(), vpc=vpc, container_insights=True)
 
         secrets = {
-        	# uncomment the following to add a secret as an environment variable
-        	# SECRETS_MANAGER_ENV_NAME: create_secret(self, get_secret_name())
+        	SECRETS_MANAGER_ENV_NAME: create_secret(self, get_secret_name())
         }
 
-        env_vars = {}
+        env_vars = {
+        	APP_REDIRECT_URL=get_redirect_url()
+        }
 
         task_image_options = ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
     	    	   image=ecs.ContainerImage.from_registry(get_docker_image_name()),
