@@ -93,7 +93,7 @@ class DockerFargateStack(Stack):
         }
 
         env_vars = {
-        	APP_REDIRECT_URL=get_redirect_url()
+        	APP_REDIRECT_URL: get_redirect_url()
         }
 
         task_image_options = ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
