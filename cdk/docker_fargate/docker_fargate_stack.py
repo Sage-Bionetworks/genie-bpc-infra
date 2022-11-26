@@ -111,10 +111,10 @@ class DockerFargateStack(Stack):
         load_balanced_fargate_service = ecs_patterns.\
                 ApplicationLoadBalancedFargateService(self, get_service_name(),
             cluster=cluster,            # Required
-            cpu=256,                    # Default is 256
+            cpu=2048,                    # Default is 256 (=.25 vCPU)
             desired_count=1,            # Number of copies of the 'task' (i.e. the app') running behind the ALB
             task_image_options=task_image_options,
-            memory_limit_mib=1024,      # Default is 512
+            memory_limit_mib=2048,      # Default is 512 (2048 for 2GB memory which goes with 2048 cpu (=2 vCPU)
             public_load_balancer=True,  # Default is False
             # TLS:
             protocol=elbv2.ApplicationProtocol.HTTPS,
