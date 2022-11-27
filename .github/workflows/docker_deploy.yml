@@ -7,7 +7,7 @@ on:
   push:
 
 env:
-  IMAGE_PATH_AND_TAG: ghcr.io/brucehoff/genie-bpc-shiny:release-0.9
+  IMAGE_PATH_AND_TAG: ghcr.io/brucehoff/genie-bpc-shiny:release-0.10
   AWS_DEFAULT_REGION: 'us-east-1' 
   PORT: 3838
   COST_CENTER: "NO PROGRAM / 000000"
