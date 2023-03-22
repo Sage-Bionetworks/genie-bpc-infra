@@ -133,3 +133,13 @@ dmypy.json
 .pytype/
 
 .project
+
+# jetbrains
+.idea
+
+# CDK outputs
+cdk.out/
+
+# VS Code
+.vscode/
+
