@@ -38,6 +38,19 @@
       "STACK_NAME_PREFIX": "genie-bpc-shiny",
       "VPC_CIDR": "172.33.0.0/24",
       "ACM_CERT_ARN": "arn:aws:acm:us-east-1:631692904429:certificate/8644a975-2c1d-49ca-bc73-786745db0bc8"
+      "APP_REDIRECT_URL": "https://genie-bpc.dev.app.sagebionetworks.org",
+      "OAUTH_CLIENT_ID": "100316"
+    },
+    "prod": {
+      "IMAGE_PATH_AND_TAG": "ghcr.io/sage-bionetworks/genie-bpc-shiny:0.1.0",
+      "AWS_DEFAULT_REGION": "us-east-1",
+      "PORT": "3838",
+      "COST_CENTER": "Genie-AACR BPC / 312100",
+      "STACK_NAME_PREFIX": "genie-bpc-shiny",
+      "VPC_CIDR": "172.34.0.0/24",
+      "ACM_CERT_ARN": "arn:aws:acm:us-east-1:739768332450:certificate/339e878a-23bf-4540-a7bc-8ddec261571f"
+      "APP_REDIRECT_URL": "https://genie-bpc.app.sagebionetworks.org",
+      "OAUTH_CLIENT_ID": "100316"
     }
   }
 }
