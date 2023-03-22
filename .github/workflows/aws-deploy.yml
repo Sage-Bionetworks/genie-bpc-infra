@@ -10,7 +10,7 @@ on:
     branches: ['*']
 
 env:
-   CONTEXT: dev
+   CONTEXT: prod
 
 concurrency: ci-${{ github.ref }}
 
@@ -54,7 +54,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
-          role-to-assume: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO
+          role-to-assume: arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO
           role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
           role-duration-seconds: 1200
 
