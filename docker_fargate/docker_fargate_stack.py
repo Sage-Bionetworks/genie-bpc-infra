@@ -59,7 +59,7 @@ class DockerFargateStack(Stack):
 
         env_vars = {}
         for env_key in ENV_VARS_FOR_APPLICATION:
-        	env_vars[env_key]=env[env_key]
+            env_vars[env_key]=env[env_key]
 
         task_image_options = ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
                    image=ecs.ContainerImage.from_registry(get_docker_image_name(env)),
