@@ -21,7 +21,7 @@ PORT_NUMBER_CONTEXT = "PORT"
 SECRETS_MANAGER_ENV_NAME = "SECRETS_MANAGER_SECRETS"
 ENV_NAME = "ENV"
 # Configuration values in cdk.json which should be passed to the application
-ENV_VARS_FOR_APPLICATION = ["APP_REDIRECT_URL", "OAUTH_CLIENT_ID"]
+ENV_VARS_FOR_APPLICATION = ["APP_REDIRECT_URL"]
 
 def get_secret(scope: Construct, id: str, name: str) -> str:
     isecret = sm.Secret.from_secret_name_v2(scope, id, name)
