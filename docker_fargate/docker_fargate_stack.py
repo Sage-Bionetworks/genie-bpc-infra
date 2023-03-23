@@ -19,17 +19,15 @@ PORT_NUMBER_CONTEXT = "PORT"
 
 # The name of the environment variable that will hold the secrets
 SECRETS_MANAGER_ENV_NAME = "SECRETS_MANAGER_SECRETS"
-CONTAINER_ENV = "CONTAINER_ENV" # name of env passed from GitHub action
 ENV_NAME = "ENV"
+# Configuration values in cdk.json which should be passed to the application
+ENV_VARS_FOR_APPLICATION = ["APP_REDIRECT_URL"]
 
 def get_secret(scope: Construct, id: str, name: str) -> str:
     isecret = sm.Secret.from_secret_name_v2(scope, id, name)
     return ecs.Secret.from_secrets_manager(isecret)
     # see also: https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_ecs/Secret.html
     # see also: ecs.Secret.from_ssm_parameter(ssm.IParameter(parameter_name=name))
-
-def get_container_env(env: dict) -> str:
-    return env.get(CONTAINER_ENV)
 
 def get_certificate_arn(env: dict) -> str:
     return env.get(ACM_CERT_ARN_CONTEXT)
@@ -60,9 +58,8 @@ class DockerFargateStack(Stack):
         }
 
         env_vars = {}
-        container_env = get_container_env(env)
-        if container_env is not None:
-            env_vars[ENV_NAME]=container_env
+        for env_key in ENV_VARS_FOR_APPLICATION:
+            env_vars[env_key]=env[env_key]
 
         task_image_options = ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
                    image=ecs.ContainerImage.from_registry(get_docker_image_name(env)),
