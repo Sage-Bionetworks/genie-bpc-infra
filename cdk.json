@@ -38,7 +38,7 @@
       "STACK_NAME_PREFIX": "genie-bpc-shiny",
       "VPC_CIDR": "172.33.0.0/24",
       "ACM_CERT_ARN": "arn:aws:acm:us-east-1:631692904429:certificate/8644a975-2c1d-49ca-bc73-786745db0bc8",
-      "APP_REDIRECT_URL": "https://genie-bpc.dev.app.sagebionetworks.org"
+      "APP_REDIRECT_URL": "https://genie-bpc-dev.app.sagebionetworks.org"
     },
     "prod": {
       "IMAGE_PATH_AND_TAG": "ghcr.io/sage-bionetworks/genie-bpc-shiny:0.1.0",
