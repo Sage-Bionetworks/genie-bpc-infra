@@ -9,9 +9,6 @@ on:
   push:
     branches: ['*']
 
-env:
-   CONTEXT: dev
-
 concurrency: ci-${{ github.ref }}
 
 jobs:
@@ -29,7 +26,7 @@ jobs:
         with:
           cdk_subcommand: 'synth'
           actions_comment: false
-          cdk_args: '--context env=${{ env.CONTEXT }} --debug'
+          cdk_args: '--context env=dev --debug'
 
       - name: Install dependencies
         run: pip install -r requirements.txt -r requirements-dev.txt
@@ -62,5 +59,33 @@ jobs:
         uses: youyo/aws-cdk-github-actions@v2
         with:
           cdk_subcommand: 'deploy'
-          cdk_args: '--require-approval never --context env=${{ env.CONTEXT }} --progress events --debug'
+          cdk_args: '--require-approval never --context env=dev --progress events --debug'
+          actions_comment: false
+
+  cdk-deploy-prod:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/prod' }}
+    needs: tests
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Assume AWS Role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO
+          role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
+          role-duration-seconds: 1200
+
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_args: '--require-approval never --context env=prod --progress events --debug'
           actions_comment: false
