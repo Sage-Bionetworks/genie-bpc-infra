@@ -50,8 +50,6 @@ jobs:
   cdk-deploy:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prod'}}
-    env:
-       PROD_ROLE_TO_ASSUME: 
     needs: tests
     permissions:
       id-token: write
