@@ -8,7 +8,7 @@ on:
     branches: ['*']
   push:
     branches: ['*']
-    
+
 env:
   CONTEXT: dev
   ROLE_TO_ASSUME: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO
@@ -27,6 +27,7 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
+    needs: set-env
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -50,7 +51,7 @@ jobs:
   cdk-deploy:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prod'}}
-    needs: tests
+    needs: [set-env,tests]
     permissions:
       id-token: write
       contents: read
