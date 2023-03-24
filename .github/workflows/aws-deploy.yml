@@ -11,6 +11,7 @@ on:
     
 env:
   CONTEXT: dev
+  ROLE_TO_ASSUME: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO
 
 concurrency: ci-${{ github.ref }}
 
@@ -21,6 +22,7 @@ jobs:
       - name: Sets env var for production release
         run: |
           echo "CONTEXT=prod" >> $GITHUB_ENV
+          echo "ROLE_TO_ASSUME=arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO" >> $GITHUB_ENV
         if: ${{ github.ref == 'refs/heads/prod' }}
 
   tests:
@@ -49,8 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prod'}}
     env:
-      DEV_ROLE_TO_ASSUME:  arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO
-      PROD_ROLE_TO_ASSUME: arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO
+       PROD_ROLE_TO_ASSUME: 
     needs: tests
     permissions:
       id-token: write
@@ -65,7 +66,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
-          role-to-assume: ${{ fromJson('{ "dev": env.DEV_ROLE_TO_ASSUME, "prod": env.PROD_ROLE_TO_ASSUME }')[env.CONTEXT] }}
+          role-to-assume: ${{env.ROLE_TO_ASSUME }}
           role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
           role-duration-seconds: 1200
 
