@@ -10,9 +10,9 @@ on:
     branches: ['*']
 
 env:
-  CONTEXT: ${{ github.GITHUB_REF_NAME == 'prod' && 'prod' || 'dev' }}
+  CONTEXT: ${{ github.REF_NAME == 'prod' && 'prod' || 'dev' }}
   ROLE_TO_ASSUME: >
-    ${{ github.GITHUB_REF_NAME == 'prod' &&
+    ${{ github.REF_NAME == 'prod' &&
     '=arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO' ||
     'arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO' }}
 
@@ -53,6 +53,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        
+      - name: Echo Deployment Configuration
+        run: echo Deploying context ${{ env.CONTEXT }} using role ${{env.ROLE_TO_ASSUME }}
 
       - name: Assume AWS Role
         uses: aws-actions/configure-aws-credentials@v1
