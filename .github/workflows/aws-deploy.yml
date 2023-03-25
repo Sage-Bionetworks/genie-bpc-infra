@@ -10,24 +10,16 @@ on:
     branches: ['*']
 
 env:
-  CONTEXT: dev
-  ROLE_TO_ASSUME: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO
+  CONTEXT: ${{ github.GITHUB_REF_NAME == 'prod' && 'prod' || 'dev' }}
+  ROLE_TO_ASSUME: ${{ github.GITHUB_REF_NAME == 'prod' && \
+  '=arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO' || \
+  'arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO' }}
 
 concurrency: ci-${{ github.ref }}
 
 jobs:
-  set-env:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Sets env var for production release
-        run: |
-          echo "CONTEXT=prod" >> $GITHUB_ENV
-          echo "ROLE_TO_ASSUME=arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO" >> $GITHUB_ENV
-        if: ${{ github.ref == 'refs/heads/prod' }}
-
   tests:
     runs-on: ubuntu-latest
-    needs: set-env
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -51,7 +43,7 @@ jobs:
   cdk-deploy:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prod'}}
-    needs: [set-env,tests]
+    needs: tests
     permissions:
       id-token: write
       contents: read
