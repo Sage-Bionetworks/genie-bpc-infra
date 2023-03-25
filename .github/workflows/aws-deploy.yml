@@ -13,7 +13,7 @@ env:
   CONTEXT: ${{ github.REF_NAME == 'prod' && 'prod' || 'dev' }}
   ROLE_TO_ASSUME: >
     ${{ github.REF_NAME == 'prod' &&
-    '=arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO' ||
+    'arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO' ||
     'arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO' }}
 
 concurrency: ci-${{ github.ref }}
