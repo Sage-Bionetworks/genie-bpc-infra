@@ -39,7 +39,7 @@ jobs:
     secrets: inherit
     with:
       CONTEXT: prod
-      ROLE_TO_ASSUME: arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-18H4ACOLMLGAO
+      ROLE_TO_ASSUME: arn:aws:iam::739768332450:role/sagebase-github-oidc-sage-ProviderRole
 
 #  cdk-deploy-dev:
 #    if: ${{github.ref == 'refs/heads/main'}}
@@ -48,4 +48,4 @@ jobs:
 #    secrets: inherit
 #    with:
 #      CONTEXT: dev
-#      ROLE_TO_ASSUME: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRolegeniebpcinfr-1MC1H5DE711HO
+#      ROLE_TO_ASSUME: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRole
