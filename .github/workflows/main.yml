@@ -33,7 +33,7 @@ jobs:
         run: python -m pytest tests/ -s -v
 
   cdk-deploy-prod:
-    if: ${{github.ref == 'refs/heads/prod'}}
+    if: ${{github.ref == 'refs/heads/main'}}
     needs: tests
     uses: "./.github/workflows/aws-deploy.yml"
     secrets: inherit
